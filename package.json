@@ -1,11 +1,11 @@
 {
   "name": "radar-canvas",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "原生canvas渲染的雷达图，具有基本的功能配置",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "dev": "tsc -w"
+    "dev": "webpack"
   },
   "keywords": [
     "canvas",
@@ -18,6 +18,11 @@
     "type": "git",
     "url": "https://github.com/cct124/radar-canvas"
   },
+  "files": [
+    "src",
+    "dist/*.js",
+    "types/*.d.ts"
+  ],
   "devDependencies": {
     "ts-loader": "^9.2.5",
     "typescript": "^4.4.2",

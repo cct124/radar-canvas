@@ -694,7 +694,7 @@ export default class Radar {
           this.dataPointsCoor
         );
 
-        const lingrad = this.ctx.createLinearGradient(0, maxY, 0, maxY - miniY);
+        const lingrad = this.ctx.createLinearGradient(this.cx, miniY, this.cy, maxY);
 
         fill.forEach(([offset, color]) => {
           lingrad.addColorStop(offset, color);
