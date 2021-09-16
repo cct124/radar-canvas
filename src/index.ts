@@ -225,7 +225,7 @@ export default class Radar {
     this.ch = this.int(radius * 2);
     this.cx = this.int(this.cw / 2) + this.x;
     this.cy = this.int(this.ch / 2) + this.y;
-    this.shape = shape;
+    this.shape = shape || "polygon";
     this.indicator = indicator;
     this.r = radius;
     this.splitNumber = Array.from(new Array(splitNumber).keys()).map(
@@ -254,8 +254,16 @@ export default class Radar {
 
     if (this.splitLine.show) {
       this.pointsAll();
-      this.splitPolygon();
-      this.drawSplitPolygon();
+
+      if (this.shape === "polygon") {
+        this.splitPolygon();
+        this.drawSplitPolygon();
+      }
+
+      if (this.shape === "circle") {
+        this.splitCricle();
+        this.drawSplitCricle();
+      }
     }
 
     if (this.name.show) {
