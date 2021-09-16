@@ -20,10 +20,6 @@
 
       const ctx = canvas_node.getContext("2d");
 
-      const lingrad = ctx.createLinearGradient(0, 50, 0, 95);
-      lingrad.addColorStop(0, "rgba(97, 203, 242, 0.1)");
-      lingrad.addColorStop(1, "rgba(97, 203, 242, 0.9)");
-
       const radar = new Radar({
         ctx,
         radius,
@@ -32,21 +28,28 @@
           { text: "语文", max: 150 },
           { text: "数学", max: 150 },
           { text: "英语", max: 150 },
-          { text: "物理", max: 150 },
-          { text: "化学", max: 150 },
-          { text: "生物", max: 150 },
+          { text: "物理", max: 100 },
+          { text: "化学", max: 100 },
+          { text: "生物", max: 100 },
         ],
         data: {
-          value: [100, 110, 150, 120, 80, 30],
+          value: [100, 110, 150, 80, 80, 30],
           fill: [
             [0, "rgba(120, 208, 248, 0.1)"],
             [1, "rgba(120, 208, 248, 0.9)"],
           ],
           type: "smooth",
           // type: "sharp",
-          symbolSize: 6,
-          bezierOffset: 10,
+          symbol: {
+            show: false,
+            pointStyle: {
+              size: 6,
+              color: "#0182ff",
+            },
+          },
+          bezierOffset: 20,
           line: {
+            show: false,
             lineStyle: {
               color: "#56a3f1",
             },
@@ -65,46 +68,9 @@
             color: "#78D0F8",
           },
         },
-        name: {
-          textStyle: {
-            textAlign: "center",
-          },
-        },
       });
 
       radar.render();
-
-      // radar.crossAxis();
-      // radar.drawCrossAxis();
-      // radar.drawArea();
-
-      // radar.points();
-      // radar.axis();
-      // radar.darwAxis();
-
-      // radar.pointsAll();
-      // radar.splitPolygon();
-      // radar.drawSplitPolygon();
-
-      // // radar.splitCricle();
-      // // radar.drawSplitCricle();
-
-      // radar.drawLabel();
-
-      // radar.dataPoints();
-
-      // radar.midCoorDataPoints();
-      // radar.pointsSineCosine();
-      // radar.bezierDataPoints();
-
-      // // radar.darwDataPointsFill();
-
-      // // radar.darwDataPointsLine();
-      // // radar.darwDataPointsSymbolSize();
-
-      // // radar.pointsSineCosine();
-      // // radar.bezierOffset();
-      // radar.darwDataPointsFill();
     </script>
   </body>
 </html>

@@ -1,8 +1,17 @@
 type Shape = "polygon" | "circle";
 
 interface TextStyle {
+  /**
+   * 字体大小
+   */
   fontSize: number;
+  /**
+   * 颜色
+   */
   color: string;
+  /**
+   * 字体的粗细程度
+   */
   fontWeight: "normal" | "bold" | "bolder" | "lighter";
   fontStyle: "normal" | "italic" | "oblique";
   fontFamily: string;
@@ -13,6 +22,11 @@ interface TextStyle {
 
 interface LineStyle {
   lineWidth: number;
+  color: string;
+}
+
+interface pointStyle {
+  size: number;
   color: string;
 }
 
@@ -41,16 +55,37 @@ interface SplitLine {
 
 interface Data {
   show: boolean;
-  symbolSize: number;
   value: number[];
   type: "sharp" | "smooth";
+  /**
+   * 数据区域的边线
+   */
   line: {
     show: boolean;
     lineStyle: LineStyle;
   };
+  /**
+   * 数据区域的交点
+   */
+  symbol: {
+    show: boolean;
+    pointStyle: pointStyle;
+  };
+  /**
+   * 控制bezier控制点的偏移，控制这个值可以控制圆角，只有在 type 为smooth时生效
+   */
   bezierOffset: number;
+  /**
+   * X 轴偏移值
+   */
   offsetX: number;
+  /**
+   * Y 轴偏移值
+   */
   offsetY: number;
+  /**
+   * 填充的色值，当为数组时为渐变色
+   */
   fill?: string | [number, string][];
 }
 
@@ -120,7 +155,7 @@ class Radar {
       fontSize: 18,
       fontWeight: "normal",
       fontFamily: "sans-serif",
-      textAlign: "normal",
+      textAlign: "center",
       padding: 0,
     },
   };
@@ -128,16 +163,22 @@ class Radar {
   data: Data = {
     show: true,
     value: [],
-    symbolSize: 0,
     offsetX: 0,
     offsetY: 0,
     bezierOffset: 0,
+    symbol: {
+      show: true,
+      pointStyle: {
+        size: 4,
+        color: "#a9304b",
+      },
+    },
     type: "sharp",
     line: {
       show: true,
       lineStyle: {
         color: "#000000",
-        lineWidth: 1,
+        lineWidth: 0,
       },
     },
   };
@@ -231,6 +272,8 @@ class Radar {
       }
 
       this.darwDataPointsFill();
+      if (this.data.line.show) this.darwDataPointsLine();
+      if (this.data.symbol.show) this.darwDataPointsSymbolSize();
     }
   }
 
@@ -513,12 +556,13 @@ class Radar {
   dataPoints() {
     this.dataPointsCoor = this.dataRadius.map((r, i) => {
       const deg = this.deg(i);
-      return [this.cosX(deg, r), this.sinY(deg, r)];
+      return [
+        this.cosX(deg, r) + this.data.offsetX,
+        this.sinY(deg, r) + this.data.offsetY,
+      ];
     });
 
     this.dataPointsCoor.forEach(([x, y], i) => {
-      x += this.data.offsetX;
-      y += this.data.offsetY;
       if (i === 0) {
         this._dataPoints.moveTo(x, y);
       } else {
@@ -693,13 +737,15 @@ class Radar {
   /**
    * 绘制数据区域坐标点
    */
-  darwDataPointsSymbolSize() {
+  darwDataPointsSymbolSize(
+    size = this.data.symbol.pointStyle.size,
+    color = this.data.symbol.pointStyle.color
+  ) {
     this.dataPointsCoor.forEach(([x, y], i) => {
       const _f = this.ctx.fillStyle;
-      const s = this.data.symbolSize;
 
-      this.ctx.fillStyle = this.data.line.lineStyle.color;
-      this.ctx.fillRect(x - s / 2, y - s / 2, s, s);
+      this.ctx.fillStyle = color;
+      this.ctx.fillRect(x - size / 2, y - size / 2, size, size);
 
       this.ctx.fillStyle = _f;
     });
