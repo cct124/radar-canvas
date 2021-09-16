@@ -80,7 +80,7 @@ interface Data {
      */
     fill?: string | [number, string][];
 }
-declare class Radar {
+export default class Radar {
     _crossAxis: Path2D;
     _axis: Path2D;
     _polygon: Path2D;
@@ -357,3 +357,4 @@ declare class Radar {
      */
     mixin<T>(obj: any, mixins: any): T;
 }
+export {};

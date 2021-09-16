@@ -89,7 +89,7 @@ interface Data {
   fill?: string | [number, string][];
 }
 
-class Radar {
+export default class Radar {
   _crossAxis = new Path2D();
   _axis = new Path2D();
   _polygon = new Path2D();
