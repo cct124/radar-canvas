@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radar Canvas</title>
+  </head>
+  <body>
+    <script src="../dist/index.js"></script>
+    <canvas id="radar"> </canvas>
+
+    <script>
+      const cw = 500;
+      const ch = 500;
+      const radius = 200;
+      const canvas_node = document.getElementById("radar");
+      canvas_node.width = cw;
+      canvas_node.height = ch;
+
+      const ctx = canvas_node.getContext("2d");
+
+      const lingrad = ctx.createLinearGradient(0, 50, 0, 95);
+      lingrad.addColorStop(0, "rgba(97, 203, 242, 0.1)");
+      lingrad.addColorStop(1, "rgba(97, 203, 242, 0.9)");
+
+      const radar = new Radar({
+        ctx,
+        radius,
+        splitNumber: 4,
+        indicator: [
+          { text: "语文", max: 150 },
+          { text: "数学", max: 150 },
+          { text: "英语", max: 150 },
+          { text: "物理", max: 150 },
+          { text: "化学", max: 150 },
+          { text: "生物", max: 150 },
+        ],
+        data: {
+          value: [100, 110, 150, 120, 80, 30],
+          fill: [
+            [0, "rgba(120, 208, 248, 0.1)"],
+            [1, "rgba(120, 208, 248, 0.9)"],
+          ],
+          type: "smooth",
+          // type: "sharp",
+          symbolSize: 6,
+          bezierOffset: 10,
+          line: {
+            lineStyle: {
+              color: "#56a3f1",
+            },
+          },
+        },
+        x: 50,
+        y: 50,
+        startAngle: 90,
+        axisLine: {
+          lineStyle: {
+            color: "#78D0F8",
+          },
+        },
+        splitLine: {
+          lineStyle: {
+            color: "#78D0F8",
+          },
+        },
+        name: {
+          textStyle: {
+            textAlign: "center",
+          },
+        },
+      });
+
+      radar.render();
+
+      // radar.crossAxis();
+      // radar.drawCrossAxis();
+      // radar.drawArea();
+
+      // radar.points();
+      // radar.axis();
+      // radar.darwAxis();
+
+      // radar.pointsAll();
+      // radar.splitPolygon();
+      // radar.drawSplitPolygon();
+
+      // // radar.splitCricle();
+      // // radar.drawSplitCricle();
+
+      // radar.drawLabel();
+
+      // radar.dataPoints();
+
+      // radar.midCoorDataPoints();
+      // radar.pointsSineCosine();
+      // radar.bezierDataPoints();
+
+      // // radar.darwDataPointsFill();
+
+      // // radar.darwDataPointsLine();
+      // // radar.darwDataPointsSymbolSize();
+
+      // // radar.pointsSineCosine();
+      // // radar.bezierOffset();
+      // radar.darwDataPointsFill();
+    </script>
+  </body>
+</html>
