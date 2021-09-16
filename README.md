@@ -142,4 +142,8 @@ radar.render();
 
 ## 配置参数
 
- *具体查看 [index.d.ts](dist/index.d.ts) 文件*
+_具体查看 [index.d.ts](dist/index.d.ts) 文件_
+
+## License
+
+MIT
