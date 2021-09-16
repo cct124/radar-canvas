@@ -1,15 +1,23 @@
 {
   "name": "radar-canvas",
   "version": "1.0.0",
-  "description": "",
+  "description": "原生canvas渲染的雷达图，具有基本的配置功能",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "canvas",
+    "radar",
+    "雷达图"
+  ],
+  "author": "Jane",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cct124/radar-canvas"
+  },
   "devDependencies": {
     "typescript": "^4.4.2"
   }
