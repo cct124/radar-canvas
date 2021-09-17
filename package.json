@@ -1,6 +1,6 @@
 {
   "name": "radar-canvas",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "原生canvas渲染的雷达图，具有基本的功能配置",
   "main": "index.js",
   "types": "types/index.d.ts",

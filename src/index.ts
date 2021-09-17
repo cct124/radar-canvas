@@ -218,17 +218,53 @@ export default class Radar {
     name,
     transform,
   }: {
+    /**
+     * CanvasRenderingContext2D 对象
+     */
     ctx: CanvasRenderingContext2D;
+    /**
+     * 在canvas上渲染的 X 坐标
+     */
     x: number;
+    /**
+     * 在canvas上渲染的 Y 坐标
+     */
     y: number;
+    /**
+     * radar图的半径
+     */
     radius: number;
+    /**
+     * 指示器轴的分割线的类型
+     */
     shape: Shape;
+    /**
+     * radar的指示器，用来指定雷达图中的多个变量（维度）
+     */
     indicator: Indicator[];
+    /**
+     * 指示器轴的分割段数
+     */
     splitNumber: number[];
+    /**
+     * 坐标系起始角度，也就是第一个指示器轴的角度。
+     */
     startAngle: number;
+    /**
+     * 指示器轴线
+     */
     axisLine: AxisLine;
+    /**
+     * 指示器轴的分割线
+     */
     splitLine: SplitLine;
+    /**
+     * radar 的数据
+     */
     data: Data;
+    /**
+     * radar 的标签
+     */
     name: Name;
     /**
      * radar 图的变换值
