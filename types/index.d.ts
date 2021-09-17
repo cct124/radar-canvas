@@ -1,4 +1,5 @@
 declare type Shape = "polygon" | "circle";
+declare type Matrix = [number, number, number, number, number, number];
 interface TextStyle {
     /**
      * 字体大小
@@ -83,6 +84,10 @@ interface Data {
      * createLinearGradient 的 4 个参数
      */
     gradientXY?: number[];
+    /**
+     * 数据区域渲染的矩阵变换值
+     */
+    transform?: Matrix;
 }
 export default class Radar {
     _crossAxis: Path2D;
@@ -130,7 +135,8 @@ export default class Radar {
     dataPointsMidCoor: number[][];
     dataAreaVectors: number[];
     _pointsLeftRightSineCosine: number[][][];
-    constructor({ ctx, x, y, radius, shape, indicator, splitNumber, startAngle, axisLine, splitLine, data, name, }: {
+    transform: Matrix;
+    constructor({ ctx, x, y, radius, shape, indicator, splitNumber, startAngle, axisLine, splitLine, data, name, transform, }: {
         ctx: CanvasRenderingContext2D;
         x: number;
         y: number;
@@ -143,8 +149,14 @@ export default class Radar {
         splitLine: SplitLine;
         data: Data;
         name: Name;
+        /**
+         * radar 图的变换值
+         */
+        transform: Matrix;
     });
     render(): void;
+    renderBackground(): void;
+    renderData(): void;
     /**
      * 计算所有的坐标点
      */
