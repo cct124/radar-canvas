@@ -28,9 +28,14 @@ interface pointStyle {
     color: string;
 }
 interface Indicator {
+    /**
+     * 标签名
+     */
     text: string;
+    /**
+     * 数据的最大值
+     */
     max: number;
-    textStyle?: TextStyle;
 }
 interface AxisLine {
     show: boolean;
@@ -38,7 +43,13 @@ interface AxisLine {
 }
 interface Name {
     show: boolean;
+    /**
+     * 标签的x轴偏移值
+     */
     offsetX: number;
+    /**
+     * 标签的y轴偏移值
+     */
     offsetY: number;
     textStyle: TextStyle;
 }
@@ -48,7 +59,13 @@ interface SplitLine {
 }
 interface Data {
     show: boolean;
+    /**
+     * 其中的value项数组是具体的数据，每个值跟 indicator 一一对应。
+     */
     value: number[];
+    /**
+     * sharp 尖锐的交点 smooth 平滑的交点
+     */
     type: "sharp" | "smooth";
     /**
      * 数据区域的边线
