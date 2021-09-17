@@ -79,6 +79,10 @@ interface Data {
      * 填充的色值，当为数组时为渐变色
      */
     fill?: string | [number, string][];
+    /**
+     * createLinearGradient 的 4 个参数
+     */
+    gradientXY?: number[];
 }
 export default class Radar {
     _crossAxis: Path2D;

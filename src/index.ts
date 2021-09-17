@@ -87,6 +87,10 @@ interface Data {
    * 填充的色值，当为数组时为渐变色
    */
   fill?: string | [number, string][];
+  /**
+   * createLinearGradient 的 4 个参数
+   */
+  gradientXY?: number[];
 }
 
 export default class Radar {
@@ -527,7 +531,7 @@ export default class Radar {
             x = rX;
             break;
           case 3:
-            y = rY;
+            y = rY - actualBoundingBoxDescent;
             break;
           case 4:
             x = pX;
@@ -693,8 +697,14 @@ export default class Radar {
         const [[miniX, miniY], [maxX, maxY]] = this.polygonArea(
           this.dataPointsCoor
         );
+        
+        const x0 = this.data.gradientXY ? this.data.gradientXY[0] : this.cx;
+        const y0 = this.data.gradientXY ? this.data.gradientXY[1] : miniY;
 
-        const lingrad = this.ctx.createLinearGradient(this.cx, miniY, this.cy, maxY);
+        const x1 = this.data.gradientXY ? this.data.gradientXY[2] : this.cx;
+        const y1 = this.data.gradientXY ? this.data.gradientXY[3] : maxY;
+
+        const lingrad = this.ctx.createLinearGradient(x0, y0, x1, y1);
 
         fill.forEach(([offset, color]) => {
           lingrad.addColorStop(offset, color);
