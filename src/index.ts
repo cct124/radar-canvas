@@ -1,4 +1,5 @@
 type Shape = "polygon" | "circle";
+type Matrix = [number, number, number, number, number, number];
 
 interface TextStyle {
   /**
@@ -91,6 +92,11 @@ interface Data {
    * createLinearGradient 的 4 个参数
    */
   gradientXY?: number[];
+
+  /**
+   * 数据区域渲染的矩阵变换值
+   */
+  transform?: Matrix;
 }
 
 export default class Radar {
@@ -195,6 +201,8 @@ export default class Radar {
   dataAreaVectors: number[] = [];
 
   _pointsLeftRightSineCosine: number[][][] = [];
+
+  transform: Matrix;
   constructor({
     ctx,
     x = 0,
@@ -208,6 +216,7 @@ export default class Radar {
     splitLine,
     data,
     name,
+    transform,
   }: {
     ctx: CanvasRenderingContext2D;
     x: number;
@@ -221,6 +230,10 @@ export default class Radar {
     splitLine: SplitLine;
     data: Data;
     name: Name;
+    /**
+     * radar 图的变换值
+     */
+    transform: Matrix;
   }) {
     this.ctx = ctx;
     this.x = x;
@@ -241,6 +254,7 @@ export default class Radar {
     this.splitLine = this.mixin(this.splitLine, splitLine);
     this.name = this.mixin(this.name, name);
     this.data = this.mixin(this.data, data);
+    this.transform = transform;
 
     this.dataRadius = this.indicator.map((item, i) => {
       const val = this.data.value[i];
@@ -249,8 +263,22 @@ export default class Radar {
   }
 
   render() {
+    if (this.transform) this.ctx.transform(...this.transform);
+
     this.points();
 
+    this.renderBackground();
+
+    if (this.name.show) {
+      this.drawLabel();
+    }
+
+    this.renderData();
+
+    this.ctx.resetTransform();
+  }
+
+  renderBackground() {
     if (this.axisLine.show) {
       this.axis();
       this.darwAxis();
@@ -269,12 +297,11 @@ export default class Radar {
         this.drawSplitCricle();
       }
     }
+  }
 
-    if (this.name.show) {
-      this.drawLabel();
-    }
-
+  renderData() {
     if (this.data.show) {
+      if (this.data.transform) this.ctx.transform(...this.data.transform);
       this.dataPoints();
 
       if (this.data.type === "smooth") {
@@ -286,6 +313,7 @@ export default class Radar {
       this.darwDataPointsFill();
       if (this.data.line.show) this.darwDataPointsLine();
       if (this.data.symbol.show) this.darwDataPointsSymbolSize();
+      this.ctx.resetTransform();
     }
   }
 
@@ -697,7 +725,7 @@ export default class Radar {
         const [[miniX, miniY], [maxX, maxY]] = this.polygonArea(
           this.dataPointsCoor
         );
-        
+
         const x0 = this.data.gradientXY ? this.data.gradientXY[0] : this.cx;
         const y0 = this.data.gradientXY ? this.data.gradientXY[1] : miniY;
 
